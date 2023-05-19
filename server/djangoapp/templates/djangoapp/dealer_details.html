@@ -88,6 +88,10 @@
                 </div>
               </div>
             {% endfor %}
+            <div class="card-body bg-light">
+                <h5 class="card-title">Write your own review!</h5>
+                <a class="btn btn-link" method= "GET" href="{% url 'djangoapp:add_review' dealer.id %}">Add a review!</a>
+            </div>
             {% else %}
             <div class="card-columns">
               <div class="card">

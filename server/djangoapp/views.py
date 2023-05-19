@@ -79,8 +79,7 @@ def get_dealer_details(request, dealer_id):
         url = "https://us-south.functions.appdomain.cloud/api/v1/web/358e5545-6084-42ed-8f98-5c88caf172a9/dealership-package/get-review"
         reviews = get_dealer_reviews_from_cf(url, dealer_id)
         context["reviews"] = reviews
-        dealer = get_dealer_from_cf_by_id(
-            "https://us-south.functions.appdomain.cloud/api/v1/web/358e5545-6084-42ed-8f98-5c88caf172a9/dealership-package/get-dealership", dealer_id)
+        dealer = get_dealer_from_cf_by_id("https://us-south.functions.appdomain.cloud/api/v1/web/358e5545-6084-42ed-8f98-5c88caf172a9/dealership-package/get-dealership", dealer_id)
         context["dealer"] = dealer
         return render(request, 'djangoapp/dealer_details.html', context)
 
@@ -96,7 +95,7 @@ def add_review(request, dealer_id):
         return render(request, 'djangoapp/add_review.html', context)
 
     if request.method == "POST":
-        url = "https://us-south.functions.appdomain.cloud/api/v1/web/358e5545-6084-42ed-8f98-5c88caf172a9/dealership-package/get-review"      
+        url = "https://us-south.functions.appdomain.cloud/api/v1/web/358e5545-6084-42ed-8f98-5c88caf172a9/dealership-package/post-review"      
         if 'purchasecheck' in request.POST:
             was_purchased = True
         else:
@@ -118,4 +117,6 @@ def add_review(request, dealer_id):
         json_payload = {}
         json_payload["review"] = review
         response = post_request(url, json_payload)
+        print("Hello")
+        print(review)
         return redirect("djangoapp:dealer_details", dealer_id=dealer_id)

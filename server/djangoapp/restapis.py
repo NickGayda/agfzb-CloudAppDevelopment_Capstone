@@ -8,7 +8,6 @@ from ibm_watson.natural_language_understanding_v1 import Features, SentimentOpti
 
 
 def get_request(url, **kwargs):
-    print(kwargs)
     try:
         if "apikey" in kwargs:
             response = requests.get(url, headers={
@@ -17,25 +16,19 @@ def get_request(url, **kwargs):
             response = requests.get(
                 url, headers={'Content-Type': 'application/json'}, params=kwargs)
         status_code = response.status_code
-        print("With status {} ".format(status_code))
         json_data = json.loads(response.text)
     except Exception as e:
         print("Error ", e)
     status_code = response.status_code
-    print("With status {} ".format(status_code))
     json_data = json.loads(response.text)
     return json_data
 
 
 def post_request(url, json_payload, **kwargs):
-    print(json_payload)
-    print("POST from {} ".format(url))
     try:
         response = requests.post(url, params=kwargs, json=json_payload)
         status_code = response.status_code
-        print("With status {} ".format(status_code))
         json_data = json.loads(response.text)
-        print(json_data)
         return json_data
     except:
         print("Network exception occurred")
@@ -61,9 +54,9 @@ def get_dealers_from_cf(url, **kwargs):
 
 
 def get_dealer_from_cf_by_id(url, dealer_id):
-    json_result = get_request(url, id=dealer_id)
+    json_result = get_request(url, dealerId=dealer_id)
     if json_result:
-        dealer = json_result[0]['doc']
+        dealer = json_result[0]
         dealer_obj = CarDealer(address=dealer["address"], city=dealer["city"], full_name=dealer["full_name"],
                                id=dealer["id"], lat=dealer["lat"], long=dealer["long"],
                                short_name=dealer["short_name"],
